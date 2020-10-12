@@ -20,7 +20,7 @@
 
 - name: wait
   tags: wait
-  shell: sleep 300
+  shell: sleep 100
   args:
     executable: /bin/bash
 
