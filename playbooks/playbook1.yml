@@ -1,0 +1,5 @@
+---
+- hosts: kuber
+  roles:
+     - playbook1
+
