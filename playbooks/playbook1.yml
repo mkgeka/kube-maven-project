@@ -1,5 +1,4 @@
 ---
 - hosts: kuber
-  collections: community.general.docker_container
   roles:
      - playbook1

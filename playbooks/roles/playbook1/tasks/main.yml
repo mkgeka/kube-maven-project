@@ -3,6 +3,7 @@
 - name: Build an image and push it to a private repo
   tags: build
   community.general.docker_image:
+  collections: community.general.docker_container
     build:
       path: ../../../../docker 
     name: mkgeka/kuber-lamp-7
