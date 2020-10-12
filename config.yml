@@ -7,7 +7,7 @@ notifications:
     on_success: "always"
 #Database configuration
 build:
-  buildCommand: "ansible-playbook playbook.yml --tags build"
+  buildCommand: "ansible-playbook playbook.yml --skip-tags wait,k8s"
 test:
   testCommand: "ansible-playbook playbook.yml --tags k8s --check"
 #Deploy configuration
