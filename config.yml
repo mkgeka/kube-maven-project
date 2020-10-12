@@ -7,7 +7,7 @@ notifications:
     on_success: "always"
 #Database configuration
 test:
-  testCommand: "ansible-playbook playbook.yml --check"
+  testCommand: "ansible-playbook playbook.yml --skip-tags wait --check"
 #Deploy configuration
 deploy:
   deployCommand: "ansible-playbook playbook.yml"
