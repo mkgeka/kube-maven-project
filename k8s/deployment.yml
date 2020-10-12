@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: mkgeka/kuber-lamp-7:v1
+        image: mkgeka/kuber-lamp-7:v2
         ports:
         - containerPort: 80
         resources:
