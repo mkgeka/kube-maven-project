@@ -1,5 +1,15 @@
 ---
 # tasks file for playbook1
+- name: Build an image and push it to a private repo
+  tags: build
+  community.general.docker_image:
+    build:
+      path: ../../../../docker 
+    name: mkgeka/kuber-lamp-7
+    tag: v1
+    push: yes
+    source: build
+
 - name: Deploy the service
   tags: k8s
   k8s:
