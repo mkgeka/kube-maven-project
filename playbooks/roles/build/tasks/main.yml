@@ -7,7 +7,7 @@
       path: '../docker/'
     name: mkgeka/kuber-lamp-7
     state: present
-    tag: v2
+    tag: v3
     push: yes
     source: build
 
