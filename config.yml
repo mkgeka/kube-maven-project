@@ -5,9 +5,6 @@ notifications:
     on_start: "never"
     on_failure: "always"
     on_success: "always"
-#Build configuration
-source:
-  sourceGit:  "https://github.com/mkgeka/kube-maven-project.git"
 #Database configuration
 test:
   testCommand: "ansible-playbook playbook.yml --check"
