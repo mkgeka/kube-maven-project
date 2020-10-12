@@ -6,24 +6,11 @@ notifications:
     on_failure: "always"
     on_success: "always"
 #Build configuration
-build:
-  projectFolder:  'project'
-  buildCommand: "mvn clean test"
+source:
+  sourceGit:  "https://github.com/mkgeka/kube-maven-project.git"
 #Database configuration
-database:
-  databaseFolder: 'database'
-  databaseCommand: "mvn clean test -Dscope=FlywayMigration; exit 1"
+test:
+  testCommand: "ansible-playbook playbook.yml --check"
 #Deploy configuration
 deploy:
-  deployCommand: "mvn clean install"
-#Test configuration (should be run in parallel)
-test:
-- testFolder: "test"
-  name: "performance"
-  testCommand: "mvn clean test -Dscope=performance"
-- testFolder: "test"
-  name: "regression"
-  testCommand: "mvn clean test -Dscope=regression"
-- testFolder: "test"
-  name: "integration"
-  testCommand: "mvn clean test -Dscope=integration"
+  deployCommand: "ansible-playbook playbook.yml"
