@@ -19,7 +19,7 @@
   ignore_errors: yes
 
 - name: wait
-  tags: k8s
+  tags: wait
   shell: sleep 300
   args:
     executable: /bin/bash
