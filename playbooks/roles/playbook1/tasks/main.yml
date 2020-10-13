@@ -23,9 +23,9 @@
     type: 'Progressing'
   ignore_errors: yes
 
-- name: wait 100 seconds
+- name: wait 300 seconds
   tags: wait
-  shell: sleep 100
+  shell: sleep 300
   args:
     executable: /bin/bash
 
