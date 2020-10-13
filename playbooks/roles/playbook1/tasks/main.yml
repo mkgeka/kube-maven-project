@@ -18,9 +18,9 @@
    namespace: default
    wait: yes
    wait_condition:
-    reason: 'ScalingReplicaSet'
+    reason: 'NewReplicaSetAvailable'
     status: 'True'
-    type: 'Normal'
+    type: 'Progressing'
   ignore_errors: yes
 
 - name: wait 100 seconds
