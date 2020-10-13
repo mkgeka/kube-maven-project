@@ -18,9 +18,9 @@
    namespace: default
    wait: yes
    wait_condition:
-    reason: 'MinimumReplicasAvailable'
-    status: 'True'
-    type: 'Available'
+    reason: 'Started'
+    status: 'Running'
+    type: 'Normal'
   ignore_errors: yes
 
 - name: wait 100 seconds
