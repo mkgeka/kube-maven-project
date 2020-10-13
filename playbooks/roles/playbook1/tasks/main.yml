@@ -16,9 +16,14 @@
    definition: "{{ lookup('file', '../../../../k8s/service.yml') | from_yaml }}"
    validate_certs: no
    namespace: default
+   wait: yes
+   wait_condition:
+    reason: MinimumReplicasAvailable
+    status: true
+    type: Available
   ignore_errors: yes
 
-- name: wait
+- name: wait 100 seconds
   tags: wait
   shell: sleep 100
   args:
