@@ -19,7 +19,7 @@
    wait: yes
    wait_condition:
     reason: MinimumReplicasAvailable
-    status: true
+    status: True
     type: Available
   ignore_errors: yes
 
