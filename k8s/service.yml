@@ -7,8 +7,9 @@ spec:
   selector:
     app: hello-world
   ports:
-    - protocol: TCP
-      port: 30081
+    - protocol: http
+      port: 80
       targetPort: 80
+      NodePort: 30081
   type: LoadBalancer
 
