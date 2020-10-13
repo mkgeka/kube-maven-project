@@ -5,7 +5,7 @@
   community.general.docker_image:
     build:
       path: '../docker/'
-    name: mkgeka/kuber-lamp-7
+    name: localhost:5000/kuber-lamp-7
     state: present
     tag: v3
     push: yes
