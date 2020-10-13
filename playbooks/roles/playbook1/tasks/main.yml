@@ -19,7 +19,7 @@
    wait: yes
    wait_condition:
     reason: 'Started'
-    status: 'Running'
+    status: 'True'
     type: 'Normal'
   ignore_errors: yes
 
