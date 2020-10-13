@@ -18,7 +18,7 @@
    namespace: default
    wait: yes
    wait_condition:
-    reason: 'Started'
+    reason: 'ScalingReplicaSet'
     status: 'True'
     type: 'Normal'
   ignore_errors: yes
