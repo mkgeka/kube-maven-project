@@ -7,7 +7,7 @@
       path: '../docker/'
     name: 192.168.123.206:5000/kuber-lamp-7
     state: present
-    tag: v3
+    tag: v4
     push: yes
     source: build
 
