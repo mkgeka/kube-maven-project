@@ -1,19 +1,5 @@
 ---
 # tasks file for playbook1
-<<<<<<< HEAD
-=======
-- name: Deploy the ingress-controller
-  tags: k8s
-  k8s:
-   state: present
-   definition: "{{ lookup('file', '../../../../k8s/nginx-controller-{{ item }}.yml') | from_yaml }}"
-   validate_certs: no
-   namespace: default
-  with_items:
-   - [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
-  ignore_errors: yes
-
->>>>>>> 7d63e80db3d414ccc144323da5e3ac0670dbd0d0
 - name: Deploy the nginx application
   tags: k8s
   k8s:
@@ -73,10 +59,9 @@
   tags: k8s
   k8s:
    state: present
-   definition: "{{ lookup('file', '../../../../k8s/nginx-controller-"{{ item }}".yml') | from_yaml }}"
+   definition: "{{ lookup('file', '../../../../k8s/nginx-controller-{{ item }}.yml') | from_yaml }}"
    validate_certs: no
    namespace: default
-  loop:
-   - [0..16]
+  with_items:
+   - [0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
   ignore_errors: yes
-
