@@ -1,3 +1,2 @@
 ---
-- import_playbook: playbooks/build.yml
 - import_playbook: playbooks/playbook1.yml
