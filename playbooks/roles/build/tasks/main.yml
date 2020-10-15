@@ -2,12 +2,13 @@
 # tasks file for build
 - name: Build an image and push it to a private repo
   tags: build
-  community.general.docker_image:
-    build:
-      path: '../docker/'
-    name: mkgeka/kuber-lamp-7
-    state: present
-    tag: latest
-    push: yes
-    source: build
+  shell: docker build -t mkgeka/kuber-lamp-7 -f docker/Dockerfile .
+  args:
+    executable: /bin/bash
+
+- name: Build an image and push it to a private repo
+  tags: build
+  shell: docker pull mkgeka/kuber-lamp-7
+  args:
+    executable: /bin/bash
 
