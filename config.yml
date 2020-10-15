@@ -12,4 +12,4 @@ test:
   testCommand: "ansible-playbook playbook.yml --tags k8s --check"
 #Deploy configuration
 deploy:
-  deployCommand: "ansible-playbook playbook.yml --tags wait,k8s"
+  deployCommand: "ansible-playbook playbook.yml --tags update"

@@ -1,7 +1,7 @@
 ---
 # tasks file for playbook1
 - name: Deploy the nginx application
-  tags: k8s
+  tags: k8s,update
   k8s:
    state: present
    definition: "{{ lookup('file', '../../../../k8s/nginx-deployment.yml') | from_yaml }}"
@@ -24,7 +24,7 @@
   ignore_errors: yes
 
 - name: Deploy the httpd application
-  tags: k8s
+  tags: k8s,update
   k8s:
    state: present
    definition: "{{ lookup('file', '../../../../k8s/httpd-deployment.yml') | from_yaml }}"
