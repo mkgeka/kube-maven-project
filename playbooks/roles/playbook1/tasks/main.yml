@@ -1,19 +1,19 @@
 ---
 # tasks file for playbook1
-- name: Deploy the service
+- name: Deploy the ingress-controller
   tags: k8s
   k8s:
    state: present
-   definition: "{{ lookup('file', '../../../../k8s/service.yml') | from_yaml }}"
+   definition: "{{ lookup('file', '../../../../k8s/nginx-controller.yml') | from_yaml }}"
    validate_certs: no
    namespace: default
   ignore_errors: yes
 
-- name: Deploy the application
+- name: Deploy the nginx application
   tags: k8s
   k8s:
    state: present
-   definition: "{{ lookup('file', '../../../../k8s/deployment.yml') | from_yaml }}"
+   definition: "{{ lookup('file', '../../../../k8s/nginx-deployment.yml') | from_yaml }}"
    validate_certs: no
    namespace: default
    wait: yes
@@ -23,27 +23,25 @@
     type: 'Progressing'
   ignore_errors: yes
 
-- name: wait 300 seconds
-  tags: wait
-  shell: sleep 300
-  args:
-    executable: /bin/bash
-
-
-- name: Deploy the service
-  tags: delete,k8s
-  k8s:
-   state: absent
-   definition: "{{ lookup('file', '../../../../k8s/deployment.yml') | from_yaml }}"
-   validate_certs: no
-   namespace: default
-  ignore_errors: yes
-
-- name: Deploy the application
+- name: Deploy the httpd application
   tags: k8s
   k8s:
-   state: absent
-   definition: "{{ lookup('file', '../../../../k8s/service.yml') | from_yaml }}"
+   state: present
+   definition: "{{ lookup('file', '../../../../k8s/httpd-deployment.yml') | from_yaml }}"
+   validate_certs: no
+   namespace: default
+   wait: yes
+   wait_condition:
+    reason: 'NewReplicaSetAvailable'
+    status: 'True'
+    type: 'Progressing'
+  ignore_errors: yes
+
+- name: Deploy the ingress
+  tags: k8s
+  k8s:
+   state: present
+   definition: "{{ lookup('file', '../../../../k8s/ingress.yml') | from_yaml }}"
    validate_certs: no
    namespace: default
   ignore_errors: yes
