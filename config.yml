@@ -9,7 +9,7 @@ notifications:
 build:
   buildCommand: "docker build -t mkgeka/kuber-lamp-7:v5 -f docker/Dockerfile . && docker push mkgeka/kuber-lamp-7:v5"
 test:
-  testCommand: "ansible-playbook playbook.yml --tags k8s --check"
+  testCommand: "ansible-playbook playbook.yml --tags update --check"
 #Deploy configuration
 deploy:
   deployCommand: "ansible-playbook playbook.yml --tags update"
