@@ -19,3 +19,4 @@ spec:
         image: mkgeka/kuber-lamp-7:latest
         ports:
         - containerPort: 80
+      imagePullPolicy: Always
