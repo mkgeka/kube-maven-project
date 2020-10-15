@@ -7,7 +7,7 @@ notifications:
     on_success: "always"
 #Database configuration
 build:
-  buildCommand: "ansible-playbook playbook.yml --skip-tags wait,k8s"
+  buildCommand: "docker build -t mkgeka/kuber-lamp-7 -f docker/Dockerfile . && docker pull mkgeka/kuber-lamp-7"
 test:
   testCommand: "ansible-playbook playbook.yml --tags k8s --check"
 #Deploy configuration
