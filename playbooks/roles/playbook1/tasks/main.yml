@@ -1,7 +1,7 @@
 ---
 # tasks file for playbook1
 - name: Deploy the nginx application
-  tags: k8s,update
+  tags: build,update
   k8s:
    state: present
    definition: "{{ lookup('file', '../../../../k8s/nginx-deployment.yml') | from_yaml }}"
@@ -15,7 +15,7 @@
   ignore_errors: yes
 
 - name: Deploy the nginx-service.yml
-  tags: k8s
+  tags: build
   k8s:
    state: present
    definition: "{{ lookup('file', '../../../../k8s/nginx-service.yml') | from_yaml }}"
@@ -23,11 +23,20 @@
    namespace: default
   ignore_errors: yes
 
+- name: Deploy the httpd application with  "{{ BUILD_ID }}"
+  tags: build,update
+  template:
+   src: k8s/httpd-deployment.yml
+   dest: /tmp/{{ BUILD_ID }}.yml
+   owner: root
+   group: root
+   mode: 0644
+
 - name: Deploy the httpd application
-  tags: k8s,update
+  tags: build,update
   k8s:
    state: present
-   definition: "{{ lookup('file', '../../../../k8s/httpd-deployment.yml') | from_yaml }}"
+   src: /tmp/{{ BUILD_ID }}.yml
    validate_certs: no
    namespace: default
    wait: yes
@@ -38,7 +47,7 @@
   ignore_errors: yes
 
 - name: Deploy the httpd-service
-  tags: k8s
+  tags: build
   k8s:
    state: present
    definition: "{{ lookup('file', '../../../../k8s/httpd-service.yml') | from_yaml }}"
@@ -47,7 +56,7 @@
   ignore_errors: yes
 
 - name: Deploy the ingress
-  tags: k8s
+  tags: build
   k8s:
    state: present
    definition: "{{ lookup('file', '../../../../k8s/ingress.yml') | from_yaml }}"
@@ -56,7 +65,7 @@
   ignore_errors: yes
 
 - name: Deploy the ingress-controller
-  tags: k8s
+  tags: build
   k8s:
    state: present
    definition: "{{ lookup('file', '../../../../k8s/nginx-controller-{{ item }}.yml') | from_yaml }}"
