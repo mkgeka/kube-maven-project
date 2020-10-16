@@ -23,10 +23,10 @@
    namespace: default
   ignore_errors: yes
 
-- name: Deploy the httpd application with  "{{ BUILD_ID }}"
+- name: Creating the httpd application file with  "{{ BUILD_ID }}"
   tags: build,update
   template:
-   src: k8s/httpd-deployment.yml
+   src: httpd-deployment.yml
    dest: /tmp/{{ BUILD_ID }}.yml
    owner: root
    group: root
