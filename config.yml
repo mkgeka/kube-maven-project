@@ -7,7 +7,7 @@ notifications:
     on_success: "always"
 #Database configuration
 build:
-  buildCommand: "docker build -t mkgeka/kuber-lamp-7:v5 -f docker/Dockerfile . && docker push mkgeka/kuber-lamp-7:v5"
+  buildCommand: "docker build -t mkgeka/kuber-lamp-7:\${BUILD_ID} -f docker/Dockerfile . && docker push mkgeka/kuber-lamp-7:\${BUILD_ID}"
 test:
   testCommand: "ansible-playbook playbook.yml --tags update --check"
 #Deploy configuration
