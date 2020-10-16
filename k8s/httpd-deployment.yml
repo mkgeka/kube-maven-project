@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: httpd
-        image: mkgeka/kuber-lamp-7:\${BUILD_ID}
+        image: mkgeka/kuber-lamp-7:${BUILD_ID}
         ports:
         - containerPort: 80
       imagePullPolicy: Always
