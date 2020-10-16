@@ -1,9 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: nginx-ingress
+  name: {{ BRANCH_NAME }}-nginx-ingress
   labels:
-     app: nginx-ingress
+     app: {{ BRANCH_NAME }}-nginx-ingress
 spec:
   rules:
   - host: "test2.perimetr.org.ua"
