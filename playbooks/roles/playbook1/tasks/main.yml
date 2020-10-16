@@ -1,10 +1,19 @@
 ---
 # tasks file for playbook1
+- name: Creating the nginx application file with  "{{ BUILD_ID }}"
+  tags: build,update
+  template:
+   src: nginx-deployment.yml
+   dest: /tmp/nginx-{{ BUILD_ID }}.yml
+   owner: root
+   group: root
+   mode: 0644
+
 - name: Deploy the nginx application
   tags: build,update
   k8s:
    state: present
-   definition: "{{ lookup('file', '../../../../k8s/nginx-deployment.yml') | from_yaml }}"
+   src: /tmp/nginx-{{ BUILD_ID }}.yml
    validate_certs: no
    namespace: default
    wait: yes
