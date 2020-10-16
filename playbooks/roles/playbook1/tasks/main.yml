@@ -5,10 +5,24 @@
   community.general.docker_container:
     name: "{{ BUILD_ID }}"
     image: 'mkgeka/kuber-lamp-7:{{ BUILD_ID }}'
+    ports:
+      - "127.0.0.1:36893:80" 
 
 - name: Testing the image before deploying
   tags: testingimage
-  shell: docker exec -it "{{ BUILD_ID }}" sleep 10 && supervisorctl status all && curl http://localhost:80
+  wait_for: 
+    port: 36893
+    delay: 5
+
+- name: Testing the image before deploying
+  tags: testingimage
+  shell: docker exec -it "{{ BUILD_ID }}" supervisorctl status all
+  args:
+    executable: /bin/bash
+
+- name: Testing the image before deploying
+  tags: testingimage
+  shell: docker exec -it "{{ BUILD_ID }}" curl http://localhost:80
   args:
     executable: /bin/bash
 
