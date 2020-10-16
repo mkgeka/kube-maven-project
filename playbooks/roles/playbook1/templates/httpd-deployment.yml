@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: httpd-deployment
+  name: {{ BRANCH_NAME }}-httpd-deployment
   labels:
-    app: httpd
+    app: {{ BRANCH_NAME }}-httpd
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: httpd
+      app: {{ BRANCH_NAME }}-httpd
   template:
     metadata:
       labels:
-        app: httpd
+        app: {{ BRANCH_NAME }}-httpd
     spec:
       containers:
-      - name: httpd
+      - name: {{ BRANCH_NAME }}-httpd
         image: mkgeka/kuber-lamp-7:{{ BUILD_ID }}
         ports:
         - containerPort: 80
