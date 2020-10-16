@@ -14,18 +14,6 @@
     port: 36893
     delay: 5
 
-- name: Testing the image before deploying
-  tags: testingimage
-  shell: docker exec -it "{{ BUILD_ID }}" supervisorctl status all
-  args:
-    executable: /bin/bash
-
-- name: Testing the image before deploying
-  tags: testingimage
-  shell: docker exec -it "{{ BUILD_ID }}" curl http://localhost:80
-  args:
-    executable: /bin/bash
-
 - name: Delete a data container
   tags: testingimage
   community.general.docker_container:
@@ -40,6 +28,11 @@
    owner: root
    group: root
    mode: 0644
+
+- name: Testing the nginx application file/ before deploying
+  tags: build,update
+  wait_for: 
+    path: /tmp/nginx-{{ BUILD_ID }}.yml
 
 - name: Deploy the nginx application
   tags: build,update
@@ -72,6 +65,11 @@
    owner: root
    group: root
    mode: 0644
+
+- name: Testing the httpd application file/ before deploying
+  tags: build,update
+  wait_for: 
+    path: /tmp/httpd-{{ BUILD_ID }}.yml
 
 - name: Deploy the httpd application
   tags: build,update
