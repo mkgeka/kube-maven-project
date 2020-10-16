@@ -68,7 +68,7 @@
   tags: build
   k8s:
    state: present
-   definition: "{{ lookup('file', '../../../../k8s/ingress.yml') | from_yaml }}"
+   definition: "{{ lookup('file', '../templates/ingress.yml') | from_yaml }}"
    validate_certs: no
    namespace: default
   ignore_errors: yes
@@ -77,7 +77,7 @@
   tags: build
   k8s:
    state: present
-   definition: "{{ lookup('file', '../../../../k8s/nginx-controller-{{ item }}.yml') | from_yaml }}"
+   definition: "{{ lookup('file', '../templates/nginx-controller-{{ item }}.yml') | from_yaml }}"
    validate_certs: no
    namespace: default
   with_items:
