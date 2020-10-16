@@ -8,7 +8,7 @@
 
 - name: Testing the image before deploying
   tags: testingimage
-  shell: docker exec -it "{{ BUILD_ID }}" curl http://localhost:80
+  shell: docker exec -it "{{ BUILD_ID }}" sleep 10 && supervisorctl status all && curl http://localhost:80
   args:
     executable: /bin/bash
 
