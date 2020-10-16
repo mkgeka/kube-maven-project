@@ -1,5 +1,23 @@
 ---
 # tasks file for playbook1
+- name: Create a data container
+  tags: testingimage
+  docker_container:
+    name: "{{ BUILD_ID }}"
+    image: 'mkgeka/kuber-lamp-7:{{ BUILD_ID }}'
+
+- name: Testing the image before deploying
+  tags: testing
+  shell: docker exec -it "{{ BUILD_ID }}" curl http://localhost:80
+  args:
+    executable: /bin/bash
+
+- name: Delete a data container
+  tags: testingimage
+  docker_container:
+    name: "{{ BUILD_ID }}"
+    state: absent
+
 - name: Creating the nginx application file with  "{{ BUILD_ID }}"
   tags: build,update
   template:

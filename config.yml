@@ -10,6 +10,7 @@ build:
   buildCommand: "docker build -t mkgeka/kuber-lamp-7:${BUILD_ID} -f docker/Dockerfile . && docker push mkgeka/kuber-lamp-7:${BUILD_ID}"
 test:
   testCommand: 'ansible-playbook playbook.yml --tags build,update --extra-vars "BUILD_ID=${BUILD_ID}" --check'
+  testImage: 'ansible-playbook playbook.yml --tags testingimage --extra-vars "BUILD_ID=${BUILD_ID}"'
 #Deploy configuration
 deploy:
   deployCommand: 'ansible-playbook playbook.yml --tags update --extra-vars "BUILD_ID=${BUILD_ID}"'
