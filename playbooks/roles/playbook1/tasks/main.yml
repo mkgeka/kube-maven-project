@@ -109,7 +109,7 @@
   ignore_errors: yes
 
 - name: Creating the "{{ BRANCH_NAME }}" ingress file with  "{{ BUILD_ID }}"
-  tags: build
+  tags: build,update
   template:
    src: ingress.yml
    dest:  /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-ingress.yml
@@ -118,12 +118,12 @@
    mode: 0644
 
 - name: Testing the ingress file/ before deploying
-  tags: build
+  tags: build,update
   wait_for: 
     path: /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-ingress.yml
 
 - name: Deploy the ingress
-  tags: build
+  tags: build,update
   k8s:
    state: present
    src: /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-ingress.yml
