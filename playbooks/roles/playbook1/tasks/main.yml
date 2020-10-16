@@ -36,7 +36,7 @@
   tags: build,update
   template:
    src: httpd-deployment.yml
-   dest: /tmp/{{ BUILD_ID }}.yml
+   dest: /tmp/httpd-{{ BUILD_ID }}.yml
    owner: root
    group: root
    mode: 0644
@@ -45,7 +45,7 @@
   tags: build,update
   k8s:
    state: present
-   src: /tmp/{{ BUILD_ID }}.yml
+   src: /tmp/httpd-{{ BUILD_ID }}.yml
    validate_certs: no
    namespace: default
    wait: yes
