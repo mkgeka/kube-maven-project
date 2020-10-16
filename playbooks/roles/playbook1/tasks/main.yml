@@ -57,6 +57,43 @@
    namespace: default
   ignore_errors: yes
 
+- name: Creating the prod application file with  "{{ BUILD_ID }}"
+  tags: production,update
+  template:
+   src: httpd-deployment.yml
+   dest: /tmp/prod-httpd-{{ BUILD_ID }}.yml
+   owner: root
+   group: root
+   mode: 0644
+
+- name: Testing the prod application file/ before deploying
+  tags: production,update
+  wait_for: 
+    path: /tmp/prod-httpd-{{ BUILD_ID }}.yml
+
+- name: Deploy the prod application
+  tags: production,update
+  k8s:
+   state: present
+   src: /tmp/prod-httpd-{{ BUILD_ID }}.yml
+   validate_certs: no
+   namespace: default
+   wait: yes
+   wait_condition:
+    reason: 'NewReplicaSetAvailable'
+    status: 'True'
+    type: 'Progressing'
+  ignore_errors: yes
+
+- name: Deploy the prod-httpd-service
+  tags: production
+  k8s:
+   state: present
+   definition: "{{ lookup('file', '../templates/prod-httpd-service.yml') | from_yaml }}"
+   validate_certs: no
+   namespace: default
+  ignore_errors: yes
+
 - name: Creating the httpd application file with  "{{ BUILD_ID }}"
   tags: build,update
   template:
