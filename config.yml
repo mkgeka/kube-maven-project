@@ -1,0 +1,16 @@
+#Notification settings (please note: any "command" could have 'exit 1', make sure the notification will have appropriate details about failure)
+notifications:
+  email:
+    recipients: "my@box.com"
+    on_start: "never"
+    on_failure: "always"
+    on_success: "always"
+#Database configuration
+build:
+  buildCommand: "docker build -t mkgeka/kuber-lamp-7:${BUILD_ID} -f docker/Dockerfile . && docker push mkgeka/kuber-lamp-7:${BUILD_ID}"
+test:
+  testCommand: 'ansible-playbook playbook.yml --tags update --extra-vars "BUILD_ID=${BUILD_ID}" --check'
+  testImage: 'ansible-playbook playbook.yml --tags testingimage --extra-vars "BUILD_ID=${BUILD_ID}"'
+#Deploy configuration
+deploy:
+  deployCommand: 'ansible-playbook playbook.yml --tags update --extra-vars "BUILD_ID=${BUILD_ID}"'
