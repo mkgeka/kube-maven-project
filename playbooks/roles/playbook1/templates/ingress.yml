@@ -1,9 +1,9 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ BRANCH_NAME }}-nginx-ingress
+  name: nginx-ingress
   labels:
-     app: {{ BRANCH_NAME }}-nginx-ingress
+     app: nginx-ingress
 spec:
   rules:
   - host: "test2.perimetr.org.ua"
@@ -23,11 +23,11 @@ spec:
         path: "/"
         backend:
           service:
-            name: {{ BRANCH_NAME }}-httpd-lb
+            name: kubernetes-preprod-httpd-lb
             port:
              number: 80
   defaultBackend:
     service:
-      name: nginx-lb
+      name: kubernetes-master-httpd-lb
       port:
         number: 80
