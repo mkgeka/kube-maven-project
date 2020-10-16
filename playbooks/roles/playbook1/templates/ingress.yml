@@ -26,6 +26,16 @@ spec:
             name: kubernetes-preprod-httpd-lb
             port:
              number: 80
+  - host: "prod.perimetr.org.ua"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kubernetes-master-httpd-lb
+            port:
+             number: 80
   defaultBackend:
     service:
       name: kubernetes-master-httpd-lb
