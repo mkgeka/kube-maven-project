@@ -132,7 +132,7 @@
   ignore_errors: yes
 
 - name: Deploy the ingress-controller
-  tags: build
+  tags: build,ingress-controller
   k8s:
    state: present
    definition: "{{ lookup('file', '../templates/nginx-controller-{{ item }}.yml') | from_yaml }}"
