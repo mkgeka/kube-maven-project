@@ -23,11 +23,31 @@ spec:
         path: "/"
         backend:
           service:
-            name: httpd-lb
+            name: kubernetes-preprod-httpd-lb
+            port:
+             number: 80
+  - host: "prod.perimetr.org.ua"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kubernetes-master-httpd-lb
+            port:
+             number: 80
+  - host: "preprod.perimetr.org.ua"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: kubernetes-preprod-httpd-lb
             port:
              number: 80
   defaultBackend:
     service:
-      name: nginx-lb
+      name: kubernetes-master-httpd-lb
       port:
         number: 80
