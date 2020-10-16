@@ -23,7 +23,7 @@ spec:
         path: "/"
         backend:
           service:
-            name: httpd-lb
+            name: {{ BRANCH_NAME }}-httpd-lb
             port:
              number: 80
   defaultBackend:

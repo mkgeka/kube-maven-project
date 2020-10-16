@@ -24,7 +24,7 @@
   tags: build,update
   template:
    src: nginx-deployment.yml
-   dest: /tmp/nginx-{{ BUILD_ID }}.yml
+   dest: /tmp/{{ BRANCH_NAME }}-nginx-{{ BUILD_ID }}.yml
    owner: root
    group: root
    mode: 0644
@@ -32,13 +32,13 @@
 - name: Testing the nginx application file/ before deploying
   tags: build,update
   wait_for: 
-    path: /tmp/nginx-{{ BUILD_ID }}.yml
+    path: /tmp/{{ BRANCH_NAME }}-nginx-{{ BUILD_ID }}.yml
 
 - name: Deploy the nginx application
   tags: build,update
   k8s:
    state: present
-   src: /tmp/nginx-{{ BUILD_ID }}.yml
+   src: /tmp/{{ BRANCH_NAME }}-nginx-{{ BUILD_ID }}.yml
    validate_certs: no
    namespace: default
    wait: yes
@@ -57,25 +57,25 @@
    namespace: default
   ignore_errors: yes
 
-- name: Creating the prod application file with  "{{ BUILD_ID }}"
-  tags: production,update
+- name: Creating the "{{ BRANCH_NAME }}" application file with  "{{ BUILD_ID }}"
+  tags: build,update
   template:
    src: httpd-deployment.yml
-   dest: /tmp/prod-httpd-{{ BUILD_ID }}.yml
+   dest: /tmp/{{ BRANCH_NAME }}-httpd-{{ BUILD_ID }}.yml
    owner: root
    group: root
    mode: 0644
 
-- name: Testing the prod application file/ before deploying
-  tags: production,update
+- name: Testing the "{{ BRANCH_NAME }}" application file/ before deploying
+  tags: build,update
   wait_for: 
-    path: /tmp/prod-httpd-{{ BUILD_ID }}.yml
+    path: /tmp/{{ BRANCH_NAME }}-httpd-{{ BUILD_ID }}.yml
 
-- name: Deploy the prod application
-  tags: production,update
+- name: Deploy the "{{ BRANCH_NAME }}" application
+  tags: build,update
   k8s:
    state: present
-   src: /tmp/prod-httpd-{{ BUILD_ID }}.yml
+   src: /tmp/{{ BRANCH_NAME }}-httpd-{{ BUILD_ID }}.yml
    validate_certs: no
    namespace: default
    wait: yes
@@ -85,57 +85,48 @@
     type: 'Progressing'
   ignore_errors: yes
 
-- name: Deploy the prod-httpd-service
-  tags: production
-  k8s:
-   state: present
-   definition: "{{ lookup('file', '../templates/prod-httpd-service.yml') | from_yaml }}"
-   validate_certs: no
-   namespace: default
-  ignore_errors: yes
-
-- name: Creating the httpd application file with  "{{ BUILD_ID }}"
+- name: Creating the "{{ BRANCH_NAME }}" service application file with  "{{ BUILD_ID }}"
   tags: build,update
   template:
-   src: httpd-deployment.yml
-   dest: /tmp/httpd-{{ BUILD_ID }}.yml
+   src: httpd-service.yml
+   dest:  /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-httpd-service.yml
    owner: root
    group: root
    mode: 0644
 
-- name: Testing the httpd application file/ before deploying
+- name: Testing the "{{ BRANCH_NAME }}" service application file/ before deploying
   tags: build,update
   wait_for: 
-    path: /tmp/httpd-{{ BUILD_ID }}.yml
+    path: /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-httpd-service.yml
 
-- name: Deploy the httpd application
-  tags: build,update
-  k8s:
-   state: present
-   src: /tmp/httpd-{{ BUILD_ID }}.yml
-   validate_certs: no
-   namespace: default
-   wait: yes
-   wait_condition:
-    reason: 'NewReplicaSetAvailable'
-    status: 'True'
-    type: 'Progressing'
-  ignore_errors: yes
-
-- name: Deploy the httpd-service
+- name: Deploy the "{{ BRANCH_NAME }}" httpd-service
   tags: build
   k8s:
    state: present
-   definition: "{{ lookup('file', '../templates/httpd-service.yml') | from_yaml }}"
+   src: /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-httpd-service.yml
    validate_certs: no
    namespace: default
   ignore_errors: yes
+
+- name: Creating the "{{ BRANCH_NAME }}" ingress file with  "{{ BUILD_ID }}"
+  tags: build
+  template:
+   src: ingress.yml
+   dest:  /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-ingress.yml
+   owner: root
+   group: root
+   mode: 0644
+
+- name: Testing the ingress file/ before deploying
+  tags: build
+  wait_for: 
+    path: /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-ingress.yml
 
 - name: Deploy the ingress
   tags: build
   k8s:
    state: present
-   definition: "{{ lookup('file', '../templates/ingress.yml') | from_yaml }}"
+   src: /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-ingress.yml
    validate_certs: no
    namespace: default
   ignore_errors: yes
@@ -154,12 +145,24 @@
 - name: Deleting the httpd application file with  "{{ BUILD_ID }}"
   tags: build,update
   file:
-   path: /tmp/httpd-{{ BUILD_ID }}.yml
+   path: /tmp/{{ BRANCH_NAME }}-httpd-{{ BUILD_ID }}.yml
    state: absent
 
 - name: Deleting the nginx application file with  "{{ BUILD_ID }}"
   tags: build,update
   file:
-   path: /tmp/nginx-{{ BUILD_ID }}.yml
+   path: /tmp/{{ BRANCH_NAME }}-nginx-{{ BUILD_ID }}.yml
+   state: absent
+
+- name: Deleting the service  application file with  "{{ BUILD_ID }}"
+  tags: build,update
+  file:
+   path: /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-httpd-service.yml
+   state: absent
+
+- name: Deleting the ingress service file with  "{{ BUILD_ID }}"
+  tags: build
+  file:
+   path: /tmp/{{ BRANCH_NAME }}-{{ BUILD_ID }}-ingress.yml
    state: absent
 
