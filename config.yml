@@ -13,4 +13,4 @@ test:
   testImage: 'ansible-playbook playbook.yml --tags testingimage --extra-vars "BUILD_ID=${BUILD_ID}"'
 #Deploy configuration
 deploy:
-  deployCommand: 'ansible-playbook playbook.yml --tags update --extra-vars "BUILD_ID=${BUILD_ID}" "BRANCH_NAME=${BRANCH_NAME}"'
+  deployCommand: 'ansible-playbook playbook.yml --tags update --extra-vars "BUILD_ID=${BUILD_ID} BRANCH_NAME=${BRANCH_NAME}"'
