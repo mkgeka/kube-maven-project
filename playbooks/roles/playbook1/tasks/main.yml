@@ -3,7 +3,7 @@
 - name: Create a data container
   tags: testingimage
   community.general.docker_container:
-    name: "{{ BUILD_ID }}"
+    name: TETS-{{ BUILD_ID }}
     image: 'mkgeka/kuber-lamp-7:{{ BUILD_ID }}'
     ports:
       - "127.0.0.1:36893:80" 
@@ -17,7 +17,7 @@
 - name: Delete a data container
   tags: testingimage
   community.general.docker_container:
-    name: "{{ BUILD_ID }}"
+    name: TEST-{{ BUILD_ID }}
     state: absent
 
 - name: Creating the nginx application file with  "{{ BUILD_ID }}"
