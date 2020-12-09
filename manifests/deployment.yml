@@ -1,0 +1,19 @@
+apiVersion : apps/v1
+kind: Deployment
+metadata:
+  name: "az104aks-e12d"
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "az104aks-e12d"
+  template:
+    metadata:
+      labels:
+        app: "az104aks-e12d"
+    spec:
+      containers:
+        - name: "az104aks-e12d"
+          image: "az104.azurecr.io/az104aks"
+          ports:
+          - containerPort: 80
